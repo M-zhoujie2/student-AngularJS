@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>Angular表达式的容错性</title>
+</head>
+<body>
+    <div ng-controller="c2-3">
+        <span>{{tmp}}</span>
+        <button ng-click="error();">单击</button>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller("c2-3",function($scope){
+            $scope.temp = "Angular";
+            $scope.error = function(){
+                console.log(tmp);
+            }
+        });
+    </script>
+</body>
+</html>
