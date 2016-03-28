@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>$window窗口对象在表达式中的使用</title>
+</head>
+<body>
+    <div ng-controller="c2-2">
+        <input type="text" ng-model="text"/>
+        <button ng-click="show()">显示</button>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c2-2',function($window,$scope){
+            $scope.text = "";
+            $scope.show = function() {
+                $window.alert("您输入的内容是:"+$scope.text);
+            }
+        });
+    </script>
+</body>
+</html>
