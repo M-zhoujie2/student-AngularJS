@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>Angular表达式与JavaScript表达式之间的相互调用</title>
+</head>
+<body>
+    <div ng-controller="c2-1">
+        执行JavaScript表达式:<br/>
+        <input type="text" ng-model="expr1"/>
+        <button ng-click="testExpl(expr1)">计算</button>
+        <br/><br/>
+        执行Angular表达式:<br/>
+        <input type="text" ng-model="expr2">
+        <span ng-bind="$eval(expr2)"></span>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c2-1',function($scope) {
+            $scope.expr1 = 20;
+            $scope.expr2 = '20+1|number:0';
+            $scope.testExpl = function (expr){
+                var newv = parseInt(expr)+1;
+                console.log(newv);
+            }
+        });
+    </script>
+</body>
+</html>
