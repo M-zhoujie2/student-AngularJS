@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>添加带参数的$scope方法</title>
+</head>
+<body>
+    <div ng-controller="c2-7">
+        <span class="show">{{text}}</span>
+        <input id="btnshow" type="button" ng-click="click_show()" value="显示">
+        <input id="btnpara" type="button" ng-click="click_para('单击了带参数的按钮!')" value="带参数显示"/>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c2-7',["$scope",function($scope){
+            $scope.text = "Hello! Angular";
+            $scope.click_show = function(){
+               $scope.text = "单击后显示的内容";
+            };
+            $scope.click_para = function(ptext){
+               $scope.text = ptext;
+            };
+        }]);
+    </script>
+</body>
+</html>
