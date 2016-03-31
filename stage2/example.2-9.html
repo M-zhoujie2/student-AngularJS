@@ -9,13 +9,13 @@
 </head>
 <body>
     <script type="text/ng-template" id="tplbase">
-        姓名:{{name}},<br/>邮箱:{{email}}
+        姓名:{{name}}<br/>邮箱:{{email}}
     </script>
-    <div ng-include src="tplbase" ng-controller="c2-9"></div>
+    <div ng-include src="'tplbase'" ng-controller="c2-9"></div>
     <script type="text/javascript">
         var app = angular.module('app',[]);
-        app.constructor('c2-9',['$scope',function($scope){
-            $scope.text  = "张三";
+        app.controller('c2-9',['$scope',function($scope){
+            $scope.name  = "张三";
             $scope.email = "123@qq.com";
         }]);
     </script>
