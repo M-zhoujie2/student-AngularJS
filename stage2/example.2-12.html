@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>控制元素的隐藏与显示状态</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        ul{
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        div{
+            margin: 8px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c2-12">
+        <div ng-show={{isShow}}>张三</div>
+        <div ng-hide={{isHide}}>123@qq.com</div>
+        <ul ng-switch on={{switch}}>
+            <li ng-switch-when="1">张三</li>
+            <li ng-switch-when="2">123@qq.com</li>
+            <li ng-switch-default>更多...</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c2-12',['$scope',function($scope){
+            $scope.isShow = true;
+            $scope.isHide = false;
+            $scope.switch = 3;
+        }]);
+    </script>
+</body>
+</html>
