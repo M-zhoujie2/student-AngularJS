@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>表单中的checkbox和radio控件</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        div{
+            margin: 8px 0px;
+        }
+    </style>
+</head>
+<body>
+    <form name="temp_form" ng-submit="save()" ng-controller="c2-14">
+        <div>
+            <input type="checkbox" ng-model="a" ng-true-value="'同意'" ng-false-value="'不同意'">同意
+        </div>
+        <div>
+            性别:
+            <input type="radio" ng-model="b" value="男">男
+            <input type="radio" ng-model="b" value="女">女
+        </div>
+        <input type="submit" value="提交">
+        <div>{{c}}</div>
+    </form>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c2-14',['$scope',function($scope){
+            $scope.a = "同意";
+            $scope.b = "男";
+            $scope.save = function(){
+               $scope.c = "您选择的是:"+$scope.a+"和"+$scope.b;
+            };
+        }]);
+    </script>
+</body>
+</html>
