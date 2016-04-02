@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>添加元素样式</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        ul{
+            list-style-type: none;
+            width: 600px;
+            margin: 0px;
+            padding: 0px;
+        }
+        ul li{
+            float: left;
+            padding: 5px 0px;
+        }
+        ul .odd{
+            color: #0026ff;
+        }
+        ul .even{
+            color: #ff0000;
+        }
+        ul .bold{
+            font-weight: bold;
+        }
+        ul li span{
+            width: 80px;
+            float: left;
+            padding: 0px 10px;
+        }
+        ul .focus{
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c2-11">
+        <ul>
+            <li ng-class="{{bold}}">
+                <span>序号</span>
+                <span>姓名</span>
+                <span>性别</span>
+                <span>是否首条</span>
+                <span>是否尾条</span>
+                <span>是否中间条</span>
+            </li>
+            <li ng-class-odd="'odd'"
+                ng-class-even="'even'"
+                ng-repeat="stu in data"
+                ng-click="li_click($index)"
+                ng-class="{focus: $index==focus}">
+                <span>{{$index+1}}</span>
+                <span>{{stu.name}}</span>
+                <span>{{stu.sex}}</span>
+                <span>{{$first?'是':'否'}}</span>
+                <span>{{$last?'是':'否'}}</span>
+                <span>{{$middle?'是':'否'}}</span>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+            var app = angular.module('app',[]);
+            app.controller('c2-11',['$scope',function($scope){
+                $scope.bold = "bold";
+                $scope.li_click = function(i){
+                    $scope.focus = i;
+                };
+                $scope.data = [
+                    {name:"张明明",sex:"女"},
+                    {name:"李清思",sex:"女"},
+                    {name:"刘小华",sex:"男"},
+                    {name:"陈忠忠",sex:"男"},
+                ];
+            }]);
+    </script>
+</body>
+</html>
