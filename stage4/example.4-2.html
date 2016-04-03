@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>简单依赖注入的示例</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            border: solid 1px #ccc;
+            padding: 8px;
+            width: 260px;
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c4-2">
+        <div class="{{cls}}">{{text}}</div>
+        <button ng-click="onClick(1)">早上</button>
+        <button ng-click="onClick(2)">上午</button>
+        <button ng-click="onClick(3)">下午</button>
+        <button ng-click="onClick(4)">晚上</button>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.config(function($provide){
+            $provide.provider('show_1',function(){
+               this.$get = function(){
+                   return {
+                       val: function(name){
+                           return name;
+                       }
+                   }
+               }
+            });
+        });
+        app.config(function($provide){
+            $provide.factory('show_2',function(){
+               return {
+                   val: function(name){
+                       return name;
+                   }
+               }
+            });
+        });
+        app.config(function($provide){
+           $provide.value('show_3',function(name){
+              return name;
+           });
+        });
+        app.config(function($provide){
+            $provide.service('show_4',function(){
+                return {
+                    val: function(name){
+                        return name;
+                    }
+                }
+            });
+        });
+        app.controller('c4-2',['$scope','show_1','show_2','show_3','show_4',function($scope,show_1,show_2,show_3,show_4){
+            $scope.cls = "";
+            $scope.onClick = function(t){
+                $scope.cls = "show";
+                switch(t){
+                    case 1:
+                        $scope.text = show_1.val("早上好!");
+                        break;
+                    case 2:
+                        $scope.text = show_2.val("上午好!");
+                        break;
+                    case 3:
+                        $scope.text = show_3("下午好!");
+                        break;
+                    case 4:
+                        $scope.text = show_4.val("晚上好!");
+                        break;
+                }
+            }
+        }]);
+    </script>
+</body>
+</html>
