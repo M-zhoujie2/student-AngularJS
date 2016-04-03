@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>标记式注入的示例</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c4-4">
+        <div class="show">{{text}}</div>
+        <input id="btnShow" type="button" value="弹出" ng-click="onShow('我是一个弹出的对话框')">
+        <input id="btnWrite" type="button" value="显示" ng-click="onWrite('今天天气有点冷啊!')">
+    </div>
+    <script type="text/javascript">
+        var c4_4 = function($scope,$show,$write){
+            $scope.onShow = function(msg){
+                $show.show(msg);
+            };
+            $scope.onWrite = function(msg){
+                $scope.text = $write.write(msg);
+            };
+        };
+        c4_4.$inject = ['$scope','$show','$write'];
+        angular.module('app',[])
+            .controller('c4-4',c4_4)
+            .factory('$show',['$window',function($window){
+                return {
+                    show: function(text){
+                        $window.alert(text);
+                    }
+                };
+            }])
+            .factory('$write',function(){
+                return {
+                    write: function(text){
+                        return text;
+                    }
+                };
+            });
+    </script>
+</body>
+</html>
