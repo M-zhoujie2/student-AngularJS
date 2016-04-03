@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>推断式注入的示例</title>
+</head>
+<body>
+    <div ng-controller="c4-3">
+        <input id="btnAlert" type="button" value="弹出对话框" ng-click="onClick('我是一个弹出对话框')">
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .factory('$show',function($window){
+            return {
+                show: function(text){
+                    $window.alert(text);
+                }
+            };
+        });
+        var c4_3 = function($scope,$show){
+            $scope.onClick = function(msg){
+                $show.show(msg);
+            }
+        }
+        app.controller('c4-3',['$scope','$show',c4_3]);
+    </script>
+</body>
+</html>
