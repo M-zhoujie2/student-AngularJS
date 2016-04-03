@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>invoke方法的示例</title>
+</head>
+<body>
+    <div ng-controller="c4-7">
+        <!--视图组件-->
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .factory('$custom',function(){
+                return {
+                    print: function(msg){
+                        console.log(msg);
+                    }
+                };
+            });
+        var injector = angular.injector(['app','ng']);
+        var fun = function($custom){
+            $custom.print("函数执行成功!");
+        }
+        injector.invoke(fun);
+        app.controller('c4-7',['$scope','$custom',function($scope,$custom){
+            //控制器代码
+        }]);
+    </script>
+</body>
+</html>
