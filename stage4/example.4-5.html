@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>行内式注入的示例</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c4-5">
+        <div class="show">{{text}}</div>
+        <input id="btnSum" type="button" value="求和" ng-click="onClick(5,10)">
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .factory('$sum',function(){
+                return {
+                    add: function(m,n){
+                        return m+n;
+                    }
+                };
+            })
+            .controller('c4-5',['$scope','$sum',function($scope,$sum){
+                $scope.onClick = function(m,n){
+                    $scope.text = m + "+" + n + "=" + $sum.add(m,n);
+                }
+            }]);
+    </script>
+</body>
+</html>
