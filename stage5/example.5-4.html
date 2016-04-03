@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>控制器方法中的参数</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            background-color: #ccc;
+            padding: 8px 0px;
+            width: 260px;
+            margin: 10px 0px;
+        }
+        input{
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c5-4">
+        <div class="show">
+            <input ng-model="a" value="0"/>
+            <span>{{type}}</span>
+            <input ng-model="b" value="0"/>
+            <span>=</span>
+            <span class="show">{{result}}</span>
+        </div>
+        <div class="show">
+            <button ng-click="change(1)">加法</button>
+            <button ng-click="change(0)">乘法</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.controller('c5-4',['$scope',function($scope){
+            $scope.type = "+";
+            $scope.change = function(t){
+                if(t){
+                    $scope.type = "+";
+                    $scope.result = parseInt($scope.a) + parseInt($scope.b);
+                }else{
+                    $scope.type = "*";
+                    $scope.result = $scope.a * $scope.b;
+                }
+            }
+        }]);
+    </script>
+</body>
+</html>
