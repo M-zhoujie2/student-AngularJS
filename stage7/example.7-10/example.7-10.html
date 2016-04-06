@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <script src="../../module/angular-resource.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-10.css">
+    <title>promise对象的创建和使用</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-10">
+        <div class="show">
+            <div class="tip">{{result}}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .factory("async",function($q,$http){
+                var defer = $q.defer();
+                $http.get('example.7-10.php')
+                .success(function(data){
+                    defer.resolve(data);
+                })
+                .error(function(reason){
+                    defer.reject(reason);
+                })
+                return defer.promise;
+            })
+            .controller('c7-10',function($scope,async){
+                var promise = async;
+                promise.then(function(resp){
+                    $scope.result = "请求成功:" + resp;
+                },function(n){
+                    $scope.result = "请求失败:" + resp;
+                })
+            });
+    </script>
+</body>
+</html>
