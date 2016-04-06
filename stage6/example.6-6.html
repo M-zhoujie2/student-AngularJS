@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>添加自定义服务依赖项方法</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            background-color: #ccc;
+            padding: 8px;
+            width: 260px;
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c6-6">
+        <div class="show">您选择的是:{{result}}</div>
+        <button ng-click="confirm('您真的要删除这条记录吗!')">删除</button>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .service('$notify',['$window',function($win){
+                return function(msg){
+                    return $win.confirm(msg)?"确定":"取消";
+                }
+            }])
+            .controller('c6-6',['$scope','$notify',function($scope,$notify){
+                $scope.confirm = function(msg){
+                    $scope.result = $notify(msg);
+                };
+            }]);
+    </script>
+</body>
+</html>
