@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>作用域事件的传播</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            background-color: #ccc;
+            padding: 8px;
+            width: 260px;
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c6-9-1">
+        <div class="show">编号:{{stu.code}}</div>
+        <div class="show">姓名:{{stu.name}}</div>
+        <div class="show">分数:{{stu.score}}</div>
+        <button ng-click="reset()">重置</button>
+    </div>
+    <div ng-controller="c6-9-2">
+        <div class="show">编号:{{stu.code}}</div>
+        <div class="show">姓名:{{stu.name}}</div>
+        <div class="show">分数:{{stu.score}}</div>
+    </div>
+    <script type="text/javascript">
+        function student(json){
+            angular.extend(this,json);
+            this.reset = function(){
+                this.code  = 1000;
+                this.name  = "张三";
+                this.score = 0;
+            }
+        }
+        student.create = function(){
+            return new student({
+               code: 1001,
+               name: "王心明",
+               score: 98
+            });
+        }
+        angular.module('app',[])
+            .factory('$student',function(){
+                return {
+                    create: student.create
+                }
+            })
+            .controller('c6-9-1',function($scope,$student){
+                $scope.stu = $student.create();
+                $scope.reset = function(){
+                    $scope.stu.reset();
+                };
+            })
+            .controller('c6-9-2',function($scope,$student){
+                $scope.stu = $student.create();
+            })
+    </script>
+</body>
+</html>
