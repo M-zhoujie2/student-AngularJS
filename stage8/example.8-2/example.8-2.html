@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>设置指令对象的基本属性</title>
+    <style type="text/css">
+        .frame{
+            padding: 2px 8px;
+            margin: 0px;
+            font-size: 12px;
+            width: 320px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <ts-tplfile></ts-tplfile>
+        <ts-tplscipt></ts-tplscipt>
+        <ts-tplcache></ts-tplcache>
+    </div>
+    <script type="text/ng-template" id="tpl">
+        <h3>模板内容来源于script元素</h3>
+    </script>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .run(function($templateCache){
+                $templateCache.put('cache','<h3>模板内容来源于缓存</h3>')
+            })
+            .directive('tsTplfile',function(){
+            return {
+                restrict: 'EAC',
+                templateUrl: 'example.8-2-1.html'
+                };
+            })
+            .directive('tsTplscipt',function(){
+                return{
+                    restrict: 'EAC',
+                    templateUrl: 'tpl',
+                    replace: true
+                };
+            })
+            .directive('tsTplcache',function(){
+                return{
+                    restrict: 'EAC',
+                    templateUrl: 'cache'
+                };
+            })
+    </script>
+</body>
+</html>
