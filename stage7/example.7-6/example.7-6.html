@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-6.css">
+    <title>自定义$http服务中的缓存</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-6">
+        <div class="show">
+            <div class="tip">接受内容是:{{result}}</div>
+            <button ng-click="refresh()">刷新</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .service('cache',function($cacheFactory){
+                return $cacheFactory('mycache',{capacity: 3})
+            })
+            .controller('c7-6',['$scope','$http','cache',function($scope,$http,cache){
+                var url = 'example.7-6.php';
+                $http({
+                    method: "GET",
+                    url: url,
+                    cache: cache
+                })
+                .success(function(data,status,headers,config){
+                    $scope.result = data;
+                    cache.put("c",data);
+                })
+                $scope.refresh = function(){
+                    var _c = cache.get("c");
+                    $scope.result = (_c) ? _c + "(来源缓存)" : "刷新失败!";
+                }
+            }]);
+    </script>
+</body>
+</html>
