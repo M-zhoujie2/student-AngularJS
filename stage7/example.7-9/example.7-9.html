@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <script src="../../module/angular-resource.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-9.css">
+    <title>promise对象的创建和使用</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-9">
+        <div class="show">
+            <div class="tip">{{t0}}</div>
+            <div class="tip">{{t1}}</div>
+            <button ng-click="action(true)">解决</button>
+            <button ng-click="action(false)">拒绝</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .controller("c7-9",function($scope,$q){
+                var defer = $q.defer();
+                $scope.action = function(type){
+                    defer.notify(0);
+                    type ? defer.resolve(1) : defer.reject(1);
+                }
+                var promise = defer.promise;
+                promise.then(function(n){
+                    n++;
+                    $scope.t1 = "已处理完成:" + n;
+                },function(n) {
+                    n++;
+                    $scope.t1 = "未完成原因:" + n;
+                },function(n) {
+                    n++;
+                    $scope.t0 = "正在处理中:" + n;
+                })
+            });
+    </script>
+</body>
+</html>
