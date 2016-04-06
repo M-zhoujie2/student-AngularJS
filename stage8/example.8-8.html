@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>一个使用require和controller属性的示例</title>
+    <style type="text/css">
+        .frame{
+            padding: 2px 8px;
+            margin: 0px;
+            font-size: 12px;
+            width: 320px;
+            background-color: #eee;
+        }
+        .tip{
+            font-size: 9px;
+            color: #666;
+            margin: 3px 5px;
+        }
+    </style>
+    <div class="frame">
+        <ts-parent>
+            <div class="tip">{{ptip}}</div>
+            <ts-child>
+                <div class="tip">{{ctip}}</div>
+            </ts-child>
+            <button ng-click="click()">换位</button>
+        </ts-parent>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .directive('tsParent',function(){
+                return{
+                    restrict: "EAC",
+                    controller: function($scope,$compile,$http){
+                        this.addChild = function(c){
+                            $scope.ptip = "今天天气不错!";
+                            $scope.click = function(){
+                                $scope.tmp = $scope.ptip;
+                                $scope.ptip = c.ctip;
+                                c.ctip = $scope.tmp;
+                            }
+                        }
+                    }
+                };
+            })
+            .directive('tsChild',function(){
+                return{
+                    restrict: "EAC",
+                    require: "^?tsParent",
+                    link: function(scope,iEle,iAttrs,ctrl){
+                        scope.ctip = "气温正好18摄氏度.";
+                        ctrl.addChild(scope);
+                    }
+                };
+            });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
