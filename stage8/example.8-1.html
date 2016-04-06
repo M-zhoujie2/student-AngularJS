@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>创建一个新的指令</title>
+    <style type="text/css">
+        .frame{
+            padding: 2px 8px;
+            margin: 0px;
+            font-size: 12px;
+            width: 320px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <ts-hello></ts-hello>
+        <div ts-hello></div>
+        <div class="ts-hello"></div>
+        <div data-ts-hello></div>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[]);
+        app.directive('tsHello',function(){
+            return {
+                restrict: 'EAC',
+                template: '<h3>Hello,angular!</h3>'
+            }
+        });
+    </script>
+</body>
+</html>
