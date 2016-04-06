@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-2.css">
+    <title>使用$http快捷方式与服务端交互</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-2">
+        <div class="show">
+            <div class="tip">POST:返回的结果是:{{result}}</div>
+            <button ng-click="onClick()">发送</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .config(function($httpProvider){
+                $httpProvider.defaults.transformRequest = function(obj){
+                    var arrStr = [];
+                    for(var p in obj){
+                        arrStr.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return arrStr.join("&");
+                };
+                $httpProvider.defaults.headers.post = {
+                    'Content-Type':
+                    'application/x-www-form-urlencoded'
+                }
+            })
+            .controller('c7-2',['$scope','$http',function($scope,$http){
+                var postData = {name : "张三"};
+                $scope.onClick = function(){
+                    $http.post('example.7-2.php',postData)
+                        .success(function(data,status,headers,config){
+                            $scope.result = data;
+                        });
+                }
+            }]);
+    </script>
+</body>
+</html>
