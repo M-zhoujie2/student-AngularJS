@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <script src="../../module/angular-resource.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-8.css">
+    <title>$resource服务中自定义方法</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-8">
+        <div class="show">
+            <div class="tip">{{r0}}</div>
+            <div class="tip">{{r1}}</div>
+            <div class="tip">{{r2}}</div>
+            <button ng-click="click()">开始</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var url = 'example.7-8.php?action=:act';
+        angular.module('app',["ngResource"])
+            .config(function($httpProvider){
+                $httpProvider.defaults.transformRequest = function(obj){
+                    var arrStr = [];
+                    for(var p in obj){
+                        arrStr.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    }
+                    return arrStr.join("&");
+                }
+                $httpProvider.defaults.headers.post = {
+                    'Content-Type':
+                    'application/x-www-form-urlencoded'
+                }
+            })
+            .factory('custom',['$resource',function($resource){
+                return $resource(url,
+                        {act:'search'},
+                        {update:{
+                            method:'POST',
+                            params:{
+                                update:true
+                            },
+                            isArray:false
+                        }
+                    })
+            }])
+            .controller('c7-8',function($scope,custom){
+                $scope.click = function(){
+                    custom.get({id:'1010'},function(resp0){
+                        $scope.r0 = (resp0[0] == "1") ? "查找成功!" : "查找失败!";
+                        resp0.key = '1011';
+                        resp0.$update({act:'update'},function(resp1){
+                            $scope.r1 = (resp1[0] == "1") ? "更新成功!" : "更新失败!";
+                            resp1.key = '1012';
+                            resp1.$save({act:'save'},function(resp2){
+                                $scope.r2 = (resp2[0] == "1") ? "保存成功!" : "保存失败!";
+                            })
+                        })
+                    })
+                }
+            })
+    </script>
+</body>
+</html>
