@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>scope属性是布尔值</title>
+    <style type="text/css">
+        .frame{
+            padding: 2px 8px;
+            margin: 0px;
+            font-size: 12px;
+            width: 320px;
+            background-color: #eee;
+        }
+        .tip{
+            font-size: 9px;
+            color: #666;
+            margin: 3px 5px;
+        }
+    </style>
+    <script type="text/ng-template" id="tpl">
+        <div class="tip">{{message}}</div>
+        <button ng-transclude></button>
+    </script>
+</head>
+<body>
+    <div class="frame">
+        <input ng-model="message" placeholder="请输入提示内容"/>
+        <ts-message>固定</ts-message>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .directive('tsMessage',function(){
+                return {
+                    restrict: "EAC",
+                    templateUrl: "tpl",
+                    transclude: true,
+                    scope: true,
+                    link: function(scope,iEle,iAttrs){
+                        iEle.bind('click',function(){
+                            scope.$apply(function(){
+                                scope.message = "这时单击按钮后的值";
+                            })
+                        })
+                    }
+                }
+            })
+    </script>
+</body>
+</html>
