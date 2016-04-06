@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>使用$provide自定义服务</title>
+    <style type="text/css">
+        body{
+            font-size: 12px;
+        }
+        .show{
+            background-color: #ccc;
+            padding: 8px;
+            width: 260px;
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="c6-2">
+        <div class="show">
+            服务返回的值:
+            <span>{{info('name')}}</span>
+            <span>{{info('sex')}}</span>
+            <span>{{info('score')}}</span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+        .config(function($provide){
+            $provide.factory('$output',function(){
+               var stu = {
+                   name: "张三",
+                   sex : "男",
+                   score:"60",
+               };
+                return stu;
+            })
+        })
+        .controller('c6-2',['$scope','$output',function($scope,$output){
+            $scope.info = function(n){
+                for(_n in $output){
+                    if(_n == n){
+                        return ($output[_n]);
+                    }
+                }
+            }
+        }]);
+    </script>
+</body>
+</html>
