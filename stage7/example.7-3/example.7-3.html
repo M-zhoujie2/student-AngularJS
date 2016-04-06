@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-3.css">
+    <title>使用$http配置对象方式与服务端交互</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-3">
+        <div class="show">
+            <input type="text" ng-model="num"/>
+            <button ng-click="onClick()">验证奇偶</button>
+            <div class="tip">您输入的是:{{result}}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .controller('c7-3',function($scope,$http){
+                $scope.num = 0;
+                $scope.result = "偶数";
+                $scope.onClick = function(){
+                    $http({
+                        method: "GET",
+                        url: "example.7-3.php",
+                        params: {
+                            n: $scope.num
+                        }
+                    })
+                    .success(function(data,status,headers,config){
+                        $scope.result = data;
+                    })
+                }
+            })
+    </script>
+</body>
+</html>
