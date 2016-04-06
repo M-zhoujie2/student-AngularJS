@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../module/angular.js"></script>
+    <script src="../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <title>设置指令对象中的link属性</title>
+    <style type="text/css">
+        .frame{
+            padding: 2px 8px;
+            margin: 0px;
+            font-size: 12px;
+            width: 320px;
+            background-color: #eee;
+        }
+        .tip{
+            font-size: 9px;
+            color: #666;
+            margin: 3px 5px;
+        }
+    </style>
+    <script type="text/ng-template" id="tpl">
+        <button>单机按钮</button>
+    </script>
+</head>
+<body>
+    <div class="frame">
+        <ts-tplscipt></ts-tplscipt>
+        <div class="tip">{{content}}</div>
+    </div>
+    <script type="text/javascript">
+        var app = angular.module('app',[])
+            .directive('tsTplscipt',function(){
+                return{
+                    restrict: 'EAC',
+                    templateUrl: 'tpl',
+                    replace: true,
+                    link: function(scope,iEle,iAttrs){
+                        iEle.bind('click',function(){
+                            scope.$apply(function(){
+                                scope.content = '这是点击后显示的内容';
+                            })
+                            iAttrs.$$element[0].disabled = true;
+                        })
+                    }
+                }
+            })
+    </script>
+</body>
+</html>
