@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../module/angular.js"></script>
+    <script src="../../module/jquery-1.12.1.min.js"></script>
+    <link rel="stylesheet" href="../../module/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="example.7-5.css">
+    <title>$http服务中的缓存</title>
+</head>
+<body>
+    <div class="frame" ng-controller="c7-5">
+        <div class="show">
+            <div class="tip">接受内容是:{{result}}</div>
+            <div class="tip">缓存内容是:{{cache}}</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        angular.module('app',[])
+            .controller('c7-5',['$scope','$http','$cacheFactory',function($scope,$http,$cacheFactory){
+                var url = 'example.7-5.php';
+                var cache = $cacheFactory.get("$http");
+                $http({
+                    method: 'GET',
+                    url: url,
+                    cache: true
+                })
+                .success(function(data,status,headers,config){
+                    $scope.result = data;
+                    var arrResp = cache.get(url);
+                    $scope.cache = arrResp[0] + "_" + arrResp[1];
+                })
+            }]);
+    </script>
+</body>
+</html>
